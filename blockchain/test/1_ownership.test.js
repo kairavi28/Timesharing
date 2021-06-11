@@ -22,7 +22,11 @@ contract('OwnershipCoin', async (accounts) => {
 
         it('should init OwnershipCoin', async () => {
 
-            // await instance.createNewProject('Cool Place Number 1', 10, )
+            await instance.createNewPorject("sample project #1", 10000);
+            await instance.createNewPorject("sample project #2", 20000);
+
+            const totalSupply = await instance.totalSupply();
+            expect(totalSupply.toNumber()).to.equal(30000);
 
         });
 
