@@ -3,9 +3,9 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract BiddingCoin is ERC20("BiddingCoin", "BIC") {
-    mapping(address => bool) isParticipate;
-    address operator;
+contract BiddingToken is ERC20("BiddingCoin", "BIC") {
+    mapping(address => bool) public isParticipate;
+    address public operator;
 
     constructor() {
         operator = msg.sender;

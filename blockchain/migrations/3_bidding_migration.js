@@ -1,5 +1,5 @@
-const BiddingCoin = artifacts.require("BiddingCoin");
+const BiddingToken = artifacts.require("BiddingToken");
 
 module.exports = function (deployer) {
-    deployer.deploy(BiddingCoin);
+    deployer.deploy(BiddingToken);
 };

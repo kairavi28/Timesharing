@@ -1,4 +1,4 @@
-const OwnershipCoin = artifacts.require("OwnershipCoin");
+const OwnershipToken = artifacts.require("OwnershipToken");
 const chaiModule = require('chai');
 const { chaiEthers } = require('chai-ethers');
 const truffleAssert = require('truffle-assertions');
@@ -6,7 +6,7 @@ const truffleAssert = require('truffle-assertions');
 chaiModule.use(chaiEthers);
 const { expect } = chaiModule;
 
-contract('OwnershipCoin', async (accounts) => {
+contract('OwnershipToken', async (accounts) => {
 
     let instance;
     let agent;
@@ -15,21 +15,22 @@ contract('OwnershipCoin', async (accounts) => {
 
     before(async () => {
         [agent, alice, bob] = accounts;
-        instance = await OwnershipCoin.deployed();
+        instance = await OwnershipToken.deployed();
     });
 
     describe('Init Ownership', () => {
 
-        it('should init OwnershipCoin', async () => {
+        it('should init OwnershipToken', async () => {
 
-            await instance.createNewPorject("sample project #1", 10000);
-            await instance.createNewPorject("sample project #2", 20000);
-
-            const totalSupply = await instance.totalSupply();
-            expect(totalSupply.toNumber()).to.equal(30000);
+            const BN = web3.utils.BN;
+            const unitPrice =new BN(web3.utils.toWei('5', 'ether'));
+            const totalShares = 10000;
+            await instance.initToken("Sample Project 01", unitPrice, totalShares);
 
         });
 
+
     });
+
 
 });

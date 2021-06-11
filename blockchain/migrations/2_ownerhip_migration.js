@@ -1,5 +1,5 @@
-const OwnershipCoin = artifacts.require("OwnershipCoin");
+const OwnershipToken = artifacts.require("OwnershipToken");
 
 module.exports = function (deployer) {
-    deployer.deploy(OwnershipCoin);
+    deployer.deploy(OwnershipToken);
 };
