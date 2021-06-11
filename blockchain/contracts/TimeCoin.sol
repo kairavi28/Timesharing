@@ -4,8 +4,8 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract TimeCoin is ERC20("TimeCoin", "TC"){
-    mapping(address=>bool) isParticipate;
-    address operator;
+    mapping(address=>bool) public isParticipate;
+    address public operator;
     constructor(){
          operator = msg.sender;
     }
@@ -31,9 +31,13 @@ contract TimeCoin is ERC20("TimeCoin", "TC"){
     // Hook to prevent participate hiding coins to a unkonwn account
     function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
         if(!isParticipate[to]){
+            // There might never be triggered because of revert later
+            // But it really behaves differently on different environment
             emit IllegalTransfer(from, to, amount);
         }
-        require(isParticipate[to], "Only participate can receive Time Coin.");
+        if(to != address(0)){
+            require(isParticipate[to], "Only participate can receive Time Coin.");
+        }
     }
 
 
