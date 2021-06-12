@@ -21,8 +21,34 @@ const Bidding = () => {
        <>
        <Container fluid style={bg_sm}>
            <Row>
+           <Col>
+               <Card style={{ width: '30rem' }}>
+                <Card.Header>
+                    <h5>Available Bidding Properties</h5>
+                </Card.Header>
+                <Card.Body>
+                <ListGroup as="ul">
+                {items.map(item => (
+                    <ListGroup.Item as="li">
+                    <Image  className="align-self-center mr-3" src={item.pImg} alt="house-1" style={my_image}/>
+                    <span style={ListFont}>
+                        Property Name: {item.pName}
+                        <p>Price: {item.price} CAD</p>
+                        <p><Form.Group className="mb-3" controlId="formBasicInput">
+                        Bidding ID: <Form.Control type="text" placeholder="Enter Bidding Token ID" />
+                        Number of Tokens: <Form.Control type="text" placeholder="Enter Number of Tokens You Want to Bid" />
+                        </Form.Group></p>
+                    </span>
+                    <hr></hr>
+                    <Button variant="primary">Bid</Button>{' '}
+                    </ListGroup.Item>
+                    ))} 
+                </ListGroup>
+                </Card.Body>
+            </Card>
+            </Col>
             <Col>
-               <Card style={{ width: '40rem' }}>
+               <Card style={{ width: '32rem' }}>
                 <Card.Header>
                     <h5>Register</h5>
                 </Card.Header>
@@ -43,27 +69,24 @@ const Bidding = () => {
             </Form>
             </Card.Body>
             </Card>
-            </Col>
-            <Col>
-               <Card style={{ width: '70rem' }}>
+           <hr></hr>
+            <Card style={{ width: '32rem' }}>
                 <Card.Header>
-                    <h5>Available Bidding Properties</h5>
+                    <h5>Services</h5>
                 </Card.Header>
                 <Card.Body>
-                <ListGroup as="ul">
-                {items.map(item => (
-                    <ListGroup.Item as="li">
-                    <Image  className="align-self-center mr-3" src={item.pImg} alt="house-1" style={my_image}/>
-                    <span style={ListFont}>
-                        Property Name: {item.pName}
-                        Price: {item.price} CAD
-                    </span>
-                    <hr></hr>
-                    <Button variant="primary">Buy</Button>{' '}
-                    </ListGroup.Item>
-                    ))} 
-                </ListGroup>
-                </Card.Body>
+                <Form>
+               <Form.Group className="mb-3" controlId="formBasicText">
+                   <Form.Label>Ethereum Ethereum Account Address (To see your token balance)</Form.Label>
+                   <Form.Control type="text" placeholder="Enter Address" required/>
+                   <Form.Text className="text-muted">
+                       Your account address will be used to issue bidding tokens.
+                    </Form.Text>
+               </Form.Group>
+               <Button variant="primary" type="submit"> See Balance </Button>
+               {/* Your Bidding ID is : ... (let the customer know their bidding id) */}
+            </Form>
+            </Card.Body>
             </Card>
             </Col>
            </Row>
