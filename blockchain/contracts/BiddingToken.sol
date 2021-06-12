@@ -1,20 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "./TimeStamp.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract BiddingToken is ERC20("Bidding Token", "BDT") {
-    TimeStamp helper;
     address public operator;
 
-    //shows if the corresponding address has tokens assigned
-    mapping(address => mapping(uint16 => bool)) public hasTokens;
     mapping(address => bool) public isParticipate;
 
     constructor() {
         operator = msg.sender;
-        helper = new TimeStamp();
     }
 
     event IllegalTransfer(address from, address to, uint256 amount);
@@ -31,12 +26,6 @@ contract BiddingToken is ERC20("Bidding Token", "BDT") {
     // In the beginning of each period(year)
     // the operate should burn all coins and then mint
     function reassignCoin(address account, uint256 amount) public onlyOperator {
-        uint16 currentYear = helper.getYear(block.timestamp);
-        require(!hasTokens[account][currentYear], "Already received tokens.");
-
-        //set currentYear true for this address
-        hasTokens[account][currentYear] = true;
-
         _burn(account, balanceOf(account));
         _mint(account, amount);
     }

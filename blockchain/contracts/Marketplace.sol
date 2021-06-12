@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 
 import "./OwnershipToken.sol";
 import "./BiddingToken.sol";
+import "./TimeStamp.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
@@ -10,14 +11,20 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract Marketplace is AccessControl {
     using SafeMath for uint256;
     using Address for address payable;
+    TimeStamp helper;
+    BiddingToken bidding;
     address public owner;
+    //shows if the corresponding address has tokens assigned
+    mapping(address => mapping(uint16 => bool)) public receivedTokens;
 
     constructor() {
         owner = _msgSender();
+        bidding = new BiddingToken();
+        helper = new TimeStamp();
     }
 
-    //list of all of the Porjects
-    OwnershipToken[] Porjects;
+    //list of all of the Projects
+    OwnershipToken[] Projects;
     mapping(uint256 => bool) public ProjectExists;
 
     bytes32 public constant PROPERTY_OWNER = keccak256("PROPERTY_OWNER");
@@ -49,12 +56,12 @@ contract Marketplace is AccessControl {
         OwnershipToken newPorject = new OwnershipToken();
         newPorject.initToken(_projectName, _unitPrice, _totalSupply);
 
-        Porjects.push(newPorject);
-        ProjectExists[Porjects.length - 1] = true;
+        Projects.push(newPorject);
+        ProjectExists[Projects.length - 1] = true;
     }
 
     function totalProjects() public view returns (uint256 count) {
-        count = Porjects.length;
+        count = Projects.length;
     }
 
     function projectInfo(uint256 _ProjectId)
@@ -67,7 +74,7 @@ contract Marketplace is AccessControl {
         )
     {
         require(ProjectExists[_ProjectId], "!exists");
-        OwnershipToken project = Porjects[_ProjectId];
+        OwnershipToken project = Projects[_ProjectId];
         projectName = project.unitName();
         unitPrice = project.unitPrice();
         totalSupply = project.totalSupply();
@@ -77,7 +84,7 @@ contract Marketplace is AccessControl {
         require(_amount > 0, "!amount");
         require(ProjectExists[_ProjectId], "!exists");
 
-        OwnershipToken project = Porjects[_ProjectId];
+        OwnershipToken project = Projects[_ProjectId];
         require(project.totalSupply() >= _amount, "!totalSupply");
 
         //fetch unitPrice of the project
@@ -89,6 +96,14 @@ contract Marketplace is AccessControl {
         _setupRole(PROPERTY_OWNER, _msgSender());
 
         project.transferFrom(address(this), _msgSender(), _amount);
+
+        //mint biddind tokens
+        uint256 tokensTotal = getAccountTotalTokens(_msgSender());
+        bidding.register(_msgSender());
+        bidding.reassignCoin(_msgSender(), tokensTotal);
+        
+        uint16 currentYear = helper.getYear(block.timestamp);
+        receivedTokens[_msgSender()][currentYear] = true;
 
         //refund, if extra money was paid
         uint256 refund = msg.value - totalPrice;
@@ -104,8 +119,40 @@ contract Marketplace is AccessControl {
         returns (uint256)
     {
         require(ProjectExists[_ProjectId], "!exists");
-        return Porjects[_ProjectId].balanceOf(_msgSender());
+        return Projects[_ProjectId].balanceOf(_msgSender());
     }
 
-    // function assignBiddingTokens()
+    //this function is called to clain bidding tokens annualy
+    function claimTokens() public onlyPropertyOwner {
+        address account = _msgSender();
+
+        uint16 currentYear = helper.getYear(block.timestamp);
+        require(
+            !receivedTokens[account][currentYear],
+            "Already received tokens."
+        );
+
+        //set currentYear true for this address
+        receivedTokens[account][currentYear] = true;
+
+        //mint biddind tokens
+        uint256 tokensTotal = getAccountTotalTokens(_msgSender());
+        //already registered
+        bidding.reassignCoin(_msgSender(), tokensTotal);
+    }
+
+
+
+    //internal helper function
+    function getAccountTotalTokens(address account) internal view returns (uint256) {
+        uint256 sum = 0;
+
+        for (uint256 projectId = 0; projectId < Projects.length; projectId++) {
+            OwnershipToken project = Projects[projectId];
+            uint256 balance = project.balanceOf(account);
+            if (balance > 0) sum = sum.add(balance.mul(project.unitPrice()));
+        }
+
+        return sum;
+    }
 }
