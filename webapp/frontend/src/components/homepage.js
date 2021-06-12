@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import Carousal from './carousal';
-import Sample from './sample';
-
 
 function Homepage() {
     const bg_sm = {backgroundColor: "lightgrey", opacity: '0.8'};
