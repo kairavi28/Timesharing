@@ -36,7 +36,7 @@ const Bidding = () => {
             </Media>
             <Media>
                 <Media left>
-                    <Image  className="align-self-center mr-3" src={houseTwo} alt="house-1" style={my_image}/>
+                    <Image  className="align-self-center mr-3" src={houseTwo} alt="house-2" style={my_image}/>
                 </Media>
                 <Media body style={center_body}>
                 <Form >
@@ -55,7 +55,7 @@ const Bidding = () => {
             </Media>
             <Media>
                 <Media left>
-                    <Image  className="align-self-center mr-3" src={houseThree} alt="house-1" style={my_image}/>
+                    <Image  className="align-self-center mr-3" src={houseThree} alt="house-3" style={my_image}/>
                 </Media>
                 <Media body style={center_body}>
                 <Form >
@@ -74,7 +74,7 @@ const Bidding = () => {
             </Media>
             <Media>
                 <Media left>
-                    <Image  className="align-self-center mr-3" src={houseFour} alt="house-1" style={my_image}/>
+                    <Image  className="align-self-center mr-3" src={houseFour} alt="house-4" style={my_image}/>
                 </Media>
                 <Media body style={center_body}>
                 <Form >
