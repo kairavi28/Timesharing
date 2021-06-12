@@ -6,21 +6,11 @@ module.exports = {
       network_id: "*",       // Any network (default: none)
     },
   },
-
-  // Set default mocha options here, use special reporters etc.
-  mocha: {
-    // timeout: 100000
-  },
-
   // Configure your compilers
   compilers: {
     solc: {
       version: "0.8.4"
     }
-  },
-
-  db: {
-    enabled: false
   }
   
 };

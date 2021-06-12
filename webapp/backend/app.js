@@ -20,8 +20,20 @@ httpServer.listen(port, () => {
 });
 
 //express endpoints
-app.get('/', (req, res) => {
+app.get('/marketplace', (req, res) => {
     res.header("Content-Type",'application/json');
-    var data = path.resolve('path-to-contract.json');
+    var data = path.resolve('../../blockchain/build/contracts/Marketplace.json');
+    res.sendFile(data);
+});
+
+app.get('/bidding', (req, res) => {
+    res.header("Content-Type",'application/json');
+    var data = path.resolve('../../blockchain/build/contracts/BiddingToken.json');
+    res.sendFile(data);
+});
+
+app.get('/ownership', (req, res) => {
+    res.header("Content-Type",'application/json');
+    var data = path.resolve('../../blockchain/build/contracts/OwnershipToken.json');
     res.sendFile(data);
 });

@@ -30,6 +30,10 @@ contract BiddingToken is ERC20("Bidding Token", "BDT") {
         _mint(account, amount);
     }
 
+    function burnCoin(address account, uint256 amount) public onlyOperator {
+        _burn(account, amount);
+    }
+
     // Hook to prevent participate hiding coins to a unkonwn account
     function _beforeTokenTransfer(
         address from,

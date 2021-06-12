@@ -22,10 +22,9 @@ contract('OwnershipToken', async (accounts) => {
 
         it('should init OwnershipToken', async () => {
 
-            const BN = web3.utils.BN;
-            const unitPrice =new BN(web3.utils.toWei('5', 'ether'));
+            const unitPrice = web3.utils.toWei('5', 'ether');
             const totalShares = 10000;
-            await instance.initToken("Sample Project 01", unitPrice, totalShares);
+            await instance.initToken(unitPrice, totalShares);
 
         });
 
