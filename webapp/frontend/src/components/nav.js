@@ -11,6 +11,7 @@ const BaseNav = () => {
               <Nav.Link href="bidding">Bidding</Nav.Link>
               <Nav.Link href="#portfolio">Portfolio</Nav.Link>
               <Nav.Link href="project_management">Project Management</Nav.Link>
+              <Nav.Link href="marketplace">Marketplace</Nav.Link>
             </Nav>
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />

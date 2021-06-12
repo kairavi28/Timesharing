@@ -58,7 +58,7 @@ return(
       <h6>
       <ListGroup variant="flush">
         <ListGroup.Item>Property Name: The Exquisite Beach House in Vancouver</ListGroup.Item>
-        <ListGroup.Item>Price: 1024 CAD</ListGroup.Item>
+        <ListGroup.Item>Price: 3400 CAD</ListGroup.Item>
         <ListGroup.Item>Total Supply: 1000 Tokens</ListGroup.Item>
       </ListGroup>
       </h6>
@@ -76,7 +76,7 @@ return(
       <h6>
       <ListGroup variant="flush">
         <ListGroup.Item>Property Name: The Royal Villa in Florida</ListGroup.Item>
-        <ListGroup.Item>Price: 1024 CAD</ListGroup.Item>
+        <ListGroup.Item>Price: 2800 CAD</ListGroup.Item>
         <ListGroup.Item>Total Supply: 1000 Tokens</ListGroup.Item>
       </ListGroup>
       </h6>
@@ -94,7 +94,7 @@ return(
       <h6>
       <ListGroup variant="flush">
         <ListGroup.Item>Property Name: The Palm Residency in California</ListGroup.Item>
-        <ListGroup.Item>Price: 1024 CAD</ListGroup.Item>
+        <ListGroup.Item>Price: 5200 CAD</ListGroup.Item>
         <ListGroup.Item>Total Supply: 1000 Tokens</ListGroup.Item>
       </ListGroup>
       </h6>
@@ -112,7 +112,7 @@ return(
       <h6>
       <ListGroup variant="flush">
         <ListGroup.Item>Property Name: Beautiful Luxurious Bunglow in Alberta</ListGroup.Item>
-        <ListGroup.Item>Price: 1024 CAD</ListGroup.Item>
+        <ListGroup.Item>Price: 2000 CAD</ListGroup.Item>
         <ListGroup.Item>Total Supply: 1000 Tokens</ListGroup.Item>
       </ListGroup>
       </h6>
