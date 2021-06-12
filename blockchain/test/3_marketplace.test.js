@@ -22,11 +22,8 @@ contract('Marketplace', async (accounts) => {
 
         it('should init Marketplace', async () => {
 
-            const unitPrice1 = web3.utils.toWei('5', 'gwei');
-            const unitPrice2 = web3.utils.toWei('6', 'gwei');
-
-            await instance.createNewPorject("sample project #1", unitPrice1, 10000);
-            await instance.createNewPorject("sample project #2", unitPrice2, 20000);
+            await instance.createNewPorject("sample project #1", 10000);
+            await instance.createNewPorject("sample project #2", 20000);
 
             const totalProjects = await instance.totalProjects();
             expect(totalProjects.toNumber()).to.equal(2);
@@ -100,8 +97,33 @@ contract('Marketplace', async (accounts) => {
             await expect(instance.claimTokens({ from: alice })).to.be.revertedWith('!owner');
             await expect(instance.claimTokens({ from: bob })).to.be.revertedWith('Already received tokens.');
 
-        })
+        });
 
-    })
+    });
+
+    describe('Bidding', () => {
+
+        it('should create new bidding item', async () => {
+            await instance.createBidding("Bidding 01");
+            expect(await instance.biddingExists(0)).to.be.true;
+        });
+
+        it('should be bidding customer', async () => {
+
+            const biddingItem = 0;
+            await expect(instance.bid(biddingItem, 5, { from: alice })).to.be.revertedWith('!owner');
+
+        });
+
+        it('should show the winner correctly', async () => {
+
+            const biddingItem = 0;
+            await instance.bid(biddingItem, 5, { from: bob });
+            await instance.closeBidding(biddingItem);
+
+            expect(await instance.showBiddingWinner(biddingItem)).to.equal(bob);
+        });
+
+    });
 
 });
