@@ -1,10 +1,6 @@
 const BiddingToken = artifacts.require("BiddingToken");
-const chaiModule = require('chai');
-const { chaiEthers } = require('chai-ethers');
+const { assert } = require('chai');
 const truffleAssert = require('truffle-assertions');
-
-chaiModule.use(chaiEthers);
-const { expect } = chaiModule;
 
 contract("BiddingToken", function (accounts) {
     let instance;
@@ -34,17 +30,8 @@ contract("BiddingToken", function (accounts) {
         );
     });
 
-    it("should reassigning once in a year", async () => {
-
-        await instance.register(accounts[8]);
-
-        await instance.reassignCoin(accounts[8], 500);
-        await expect(instance.reassignCoin(accounts[8], 400)).to.be.revertedWith("Already received tokens.");
-
-    });
-
     it("should reassigning coin give a accounts balance", async () => {
-        await instance.reassignCoin(accounts[1], 100, { from: accounts[0] });
+        await instance.reassignCoin(accounts[1], 100);
         await instance.reassignCoin(accounts[2], 500);
         await instance.reassignCoin(accounts[3], 400);
         let newBalance1 = await instance.balanceOf(accounts[1]);
@@ -58,7 +45,7 @@ contract("BiddingToken", function (accounts) {
 
     it("should revert if reassign coin to non-registered account", async () => {
         await truffleAssert.reverts(
-            instance.reassignCoin(accounts[7], 100),
+            instance.reassignCoin(accounts[4], 100),
             "Only participate can receive Time Coin."
         );
     });
@@ -78,4 +65,14 @@ contract("BiddingToken", function (accounts) {
         );
     });
 
-});
+    it("should reassigning overwrite the account balance", async () => {
+        await instance.reassignCoin(accounts[1], 255, { from: accounts[0] });
+        let newBalance1 = await instance.balanceOf(accounts[1]);
+        assert.equal(newBalance1, 255);
+    });
+
+
+
+
+
+}); 
