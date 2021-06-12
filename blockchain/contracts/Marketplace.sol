@@ -2,6 +2,7 @@
 pragma solidity ^0.8.4;
 
 import "./OwnershipToken.sol";
+import "./BiddingToken.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
@@ -20,6 +21,7 @@ contract Marketplace is AccessControl {
     mapping(uint256 => bool) public ProjectExists;
 
     bytes32 public constant PROPERTY_OWNER = keccak256("PROPERTY_OWNER");
+    bytes32 public constant BIDDING_CUSTOMER = keccak256("BIDDING_CUSTOMER");
 
     modifier onlyOwner() {
         require(owner == _msgSender(), "!owner");
@@ -29,6 +31,12 @@ contract Marketplace is AccessControl {
     //check RBAC for property owner
     modifier onlyPropertyOwner() {
         require(hasRole(PROPERTY_OWNER, _msgSender()), "!owner");
+        _;
+    }
+
+    //check RBAC for bidding customer
+    modifier onlyBiddingCustomer() {
+        require(hasRole(BIDDING_CUSTOMER, _msgSender()), "!biddingcustomer");
         _;
     }
 
@@ -98,4 +106,6 @@ contract Marketplace is AccessControl {
         require(ProjectExists[_ProjectId], "!exists");
         return Porjects[_ProjectId].balanceOf(_msgSender());
     }
+
+    // function assignBiddingTokens()
 }
