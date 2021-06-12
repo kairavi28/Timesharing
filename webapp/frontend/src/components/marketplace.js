@@ -31,7 +31,7 @@ function Marketplace() {
             <ListGroup.Item as="li">
                  <Image  className="align-self-center mr-3" src={item.pImg} alt="house-1" style={my_image}/>
                  Property Name: {item.pName}
-                 Price: {item.price} CAD
+                 <p>Price: {item.price} CAD</p>
                  <hr></hr>
                  <Button variant="primary">Buy</Button>{' '}
             </ListGroup.Item>
@@ -41,10 +41,10 @@ function Marketplace() {
         </Card.Body>
         </Card></Col>
             <Col> 
-            <h1>Welcome to Marketplace!</h1>
+            <h3>Welcome to Marketplace!</h3>
             <Card style={{ width: '30rem' }} className="align-self-center mr-3">
             <Card.Header>
-            <h5>Search Any Project with Project ID</h5>
+            <h6>Search any project with Project ID</h6>
             </Card.Header>
             <Card.Body>
             <Form inline>
