@@ -116,7 +116,7 @@ contract Marketplace is AccessControl {
         return ownershipToken.balanceOf(_msgSender());
     }
 
-    //this function is called to clain bidding tokens annualy
+    //this function is called to claim bidding tokens annualy
     function claimTokens() public onlyPropertyOwner {
         address account = _msgSender();
 
