@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract BiddingToken is ERC20("BiddingCoin", "BIC") {
+contract BiddingToken is ERC20("Bidding Token", "BDT") {
     mapping(address => bool) public isParticipate;
     address public operator;
 
@@ -36,8 +36,15 @@ contract BiddingToken is ERC20("BiddingCoin", "BIC") {
         uint256 amount
     ) internal override {
         if (!isParticipate[to]) {
+            // There might never be triggered because of revert later
+            // But it really behaves differently on different environment
             emit IllegalTransfer(from, to, amount);
         }
-        require(isParticipate[to], "Only participate can receive Time Coin.");
+        if (to != address(0)) {
+            require(
+                isParticipate[to],
+                "Only participate can receive Time Coin."
+            );
+        }
     }
 }

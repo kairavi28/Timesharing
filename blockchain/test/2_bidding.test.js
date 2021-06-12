@@ -31,7 +31,7 @@ contract("BiddingToken", function (accounts) {
     });
 
     it("should reassigning coin give a accounts balance", async () => {
-        await instance.reassignCoin(accounts[1], 100);
+        await instance.reassignCoin(accounts[1], 100, { from: accounts[0] });
         await instance.reassignCoin(accounts[2], 500);
         await instance.reassignCoin(accounts[3], 400);
         let newBalance1 = await instance.balanceOf(accounts[1]);
