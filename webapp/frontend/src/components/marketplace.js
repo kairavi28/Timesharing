@@ -108,7 +108,7 @@ function Marketplace({ mockData, marketplace }) {
             setItems([...mockData]);
             handleClose();
 
-            showCustomAlert("success", "Transaction Successfully Don!");
+            showCustomAlert("success", "Transaction Was Successful!");
 
         } catch (e) {
             showCustomAlert("danger", "Not enough money!");

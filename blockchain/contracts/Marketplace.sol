@@ -30,7 +30,7 @@ contract Marketplace is AccessControl {
     string[] public biddings;
     mapping(uint256 => bool) public biddingExists;
     mapping(uint256 => uint256) maxBidder;
-    mapping(uint256 => address) winner;
+    mapping(uint256 => address) public winner;
 
     bytes32 public constant PROPERTY_OWNER = keccak256("PROPERTY_OWNER");
 
@@ -127,7 +127,7 @@ contract Marketplace is AccessControl {
         //set currentYear true for this address
         receivedTokens[account][currentYear] = true;
 
-        //mint biddind tokens
+        //mint bidding tokens
         uint256 tokensTotal = ownershipToken.balanceOf(account);
         //already registered
         biddingToken.reassignCoin(_msgSender(), tokensTotal * 10);
@@ -143,6 +143,10 @@ contract Marketplace is AccessControl {
 
         biddingExists[_biddingId] = false;
     }
+	
+	function totalBiddings() public view returns(uint256){
+		return biddings.length;
+	}
 
     function showBiddingWinner(uint256 _biddingId)
         public
@@ -169,14 +173,9 @@ contract Marketplace is AccessControl {
         }
 
         biddingToken.burnCoin(_msgSender(), _biddingTokenNums);
-        //already registered
-        // biddingToken.reassignCoin(
-        //     _msgSender(),
-        //     currentBalance - _biddingTokenNums
-        // );
     }
 
-    function setAllowTransfer(bool value) public onlyOwner{
-        biddingToken.setAllowTransfer(value);
-    }
+    //function setAllowTransfer(bool value) public onlyOwner{
+    //    biddingToken.setAllowTransfer(value);
+    //}
 }

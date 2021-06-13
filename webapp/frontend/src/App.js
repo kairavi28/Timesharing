@@ -3,7 +3,6 @@ import { createBrowserHistory } from "history";
 import Home from './components/homepage';
 import Sample from './components/sample';
 import Bidding from './components/bidding';
-import ProjManagement from "./components/projectManagement";
 import Marketplace from "./components/marketplace";
 import BaseNav from "./components/nav";
 import ContractHelper from './components/_ContractHelper';
@@ -15,12 +14,7 @@ import { useEffect, useState } from 'react';
 
 const appHistory = createBrowserHistory();
 
-const mockDataBidding = [
-  { pid: 1, pName: 'Beach House Bidding Option', maxBid: 3400, pImg: houseOne },
-  { pid: 2, pName: 'Royal Villa Bidding Option', maxBid: 2800, pImg: houseTwo },
-  { pid: 3, pName: 'Residency Bidding Option', maxBid: 5200, pImg: houseThree },
-  { pid: 4, pName: 'Luxurious Bunglow Bidding Option', maxBid: 2000, pImg: houseFour }
-];
+const mockDataBidding = [];
 
 const mockDataProject = [
   { pid: 1, pName: 'The Exquisite Beach House in Vancouver', avail: true, totalSupply: 1000, pImg: houseOne },
@@ -98,14 +92,12 @@ function App() {
       {loading ? 'Loading....' :
         <BrowserRouter history={appHistory}>
           <Switch>
+
             <Route exact path='/' component={Home} />
             <Route exact path='/sample' component={Sample} />
             <Route exact path='/bidding' component={() => <Bidding mockData={mockDataBidding} marketplace={marketplace} />} />
-            <Route exact path='/project_management' component={() => <ProjManagement />} />
             <Route exact path='/marketplace' component={() => <Marketplace mockData={mockDataProject} marketplace={marketplace} />} />
 
-            {/* <Route  exact path='/2' component={Page2}/>
-        <Route  exact path='/3' component={Page3}/> */}
           </Switch>
         </BrowserRouter>
       }

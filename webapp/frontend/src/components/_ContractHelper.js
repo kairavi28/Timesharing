@@ -46,8 +46,8 @@ const ContractHelper = {
         let MainProvider = await InitWeb3();
 
         return {
-            BiddingToken: await GetContract(MainProvider, 'bidding'),
-            OwnershipToken: await GetContract(MainProvider, 'ownership'),
+            // BiddingToken: await GetContract(MainProvider, 'bidding'),
+            // OwnershipToken: await GetContract(MainProvider, 'ownership'),
             Marketplace: await GetContract(MainProvider, 'marketplace')
         }
     },
