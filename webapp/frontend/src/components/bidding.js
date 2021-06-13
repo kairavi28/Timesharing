@@ -1,32 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Card, Col, ListGroup, Table, Form, Image, Button } from 'react-bootstrap';
-import houseOne from "../assets/house-1.jpeg"
-import houseTwo from "../assets/house-2.jpeg"
-import houseThree from "../assets/house-3.jpeg"
-import houseFour from "../assets/house-4.jpeg"
-import ContractHelper from './_ContractHelper';
 
-const mockData = [
-    { pid: 1, pName: 'The Exquisite Beach House in Vancouver', price: 3400, totalSupply: 1000, pImg: houseOne },
-    { pid: 2, pName: 'The Royal Villa in Florida', price: 2800, totalSupply: 1000, pImg: houseTwo },
-    { pid: 3, pName: 'The Palm Residency in California', price: 5200, totalSupply: 1000, pImg: houseThree },
-    { pid: 4, pName: 'Beautiful Luxurious Bunglow in Alberta', price: 2000, totalSupply: 1000, pImg: houseFour }
-];
-
-let marketplace, accounts;
-const initContract = async () => {
-    const contracts = await ContractHelper.init();
-    marketplace = await contracts.Marketplace.deployed();
-    accounts = await ContractHelper.getAccounts();
-
-    mockData.forEach(item => {
-        marketplace.createBidding(item.pName, {from: accounts[0]});
-    })
-}
-
-initContract();
-
-const Bidding = () => {
+const Bidding = ({ mockData }) => {
     const bg_sm = { backgroundColor: "lightgrey", opacity: '0.8' };
     const my_image = { objectFit: "cover", marginTop: "10px", height: "400px", width: "400px" }
     const center_body = { marginTop: "10%", marginLeft: "10%", width: "80%" }
@@ -35,7 +10,7 @@ const Bidding = () => {
 
     const bid = (item, i) => {
         const callBid = async () => {
-            await marketplace.bid(i, 5, {from: accounts[0]}); //TODO: change from
+            //wait marketplace.bid(i, 5); //TODO: change from
         }
 
         callBid();

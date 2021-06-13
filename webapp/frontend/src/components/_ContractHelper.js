@@ -4,9 +4,27 @@ import TruffleContract from 'truffle-contract';
 
 const InitWeb3 = async () => {
     let MainProvider = {};
+
+    if (window.ethereum) {
+        MainProvider.web3Provider = window.ethereum;
+        try {
+            // Request account access
+            await window.ethereum.enable();
+        } catch (error) {
+            // User denied account access...
+            console.error("User denied account access")
+        }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+        MainProvider.web3Provider = window.web3.currentProvider;
+    }
+    // If no injected web3 instance is detected, fall back to Ganache
+    else {
+        //using Ganache
+        MainProvider.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+    }
 	
-	//using Ganache
-    MainProvider.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     window.web3 = new Web3(MainProvider.web3Provider);
 
     return MainProvider;
