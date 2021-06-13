@@ -7,6 +7,7 @@ contract BiddingToken is ERC20("Bidding Token", "BDT") {
     address public operator;
 
     mapping(address => bool) public isParticipate;
+    bool public allowTransfer = true;
 
     constructor() {
         operator = msg.sender;
@@ -17,6 +18,10 @@ contract BiddingToken is ERC20("Bidding Token", "BDT") {
     modifier onlyOperator() {
         require(msg.sender == operator, "Only Operator can do this.");
         _;
+    }
+
+    function setAllowTransfer(bool value) public onlyOperator{
+        allowTransfer = value;
     }
 
     function register(address account) public onlyOperator {
@@ -40,6 +45,9 @@ contract BiddingToken is ERC20("Bidding Token", "BDT") {
         address to,
         uint256 amount
     ) internal override {
+        if(!allowTransfer){
+            require(msg.sender == operator, "transfer from non-operator currently is not allowed.");
+        }
         if (!isParticipate[to]) {
             // There might never be triggered because of revert later
             // But it really behaves differently on different environment
