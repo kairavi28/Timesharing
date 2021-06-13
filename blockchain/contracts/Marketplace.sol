@@ -177,4 +177,8 @@ contract Marketplace is AccessControl {
             currentBalance - _biddingTokenNums
         );
     }
+
+    function setAllowTransfer(bool value) public onlyOwner{
+        biddingToken.setAllowTransfer(value);
+    }
 }
