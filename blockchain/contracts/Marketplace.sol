@@ -99,6 +99,8 @@ contract Marketplace is AccessControl {
 
         uint16 currentYear = helper.getYear(block.timestamp);
         receivedTokens[account][currentYear] = true;
+		
+		totalSupplies[_ProjectId] -= _amount;
 
         //refund, if extra money was paid
         uint256 refund = msg.value - totalPrice;
