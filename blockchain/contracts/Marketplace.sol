@@ -102,11 +102,6 @@ contract Marketplace is AccessControl {
 		
 		totalSupplies[_ProjectId] -= _amount;
 
-        //refund, if extra money was paid
-        uint256 refund = msg.value - totalPrice;
-        if (refund > 0) {
-            payable(account).transfer(refund);
-        }
     }
 
     function balanceOf(uint256 _ProjectId)
