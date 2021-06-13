@@ -173,10 +173,10 @@ contract Marketplace is AccessControl {
 
         biddingToken.burnCoin(_msgSender(), _biddingTokenNums);
         //already registered
-        biddingToken.reassignCoin(
-            _msgSender(),
-            currentBalance - _biddingTokenNums
-        );
+        // biddingToken.reassignCoin(
+        //     _msgSender(),
+        //     currentBalance - _biddingTokenNums
+        // );
     }
 
     function setAllowTransfer(bool value) public onlyOwner{
