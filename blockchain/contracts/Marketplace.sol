@@ -94,7 +94,8 @@ contract Marketplace is AccessControl {
 
         //mint biddind tokens
         biddingToken.register(account);
-        biddingToken.reassignCoin(account, _amount * 10);
+        uint256 currentBiddingBalance = biddingToken.balanceOf(account);
+        biddingToken.reassignCoin(account, currentBiddingBalance + _amount * 10);
 
         uint16 currentYear = helper.getYear(block.timestamp);
         receivedTokens[account][currentYear] = true;
