@@ -84,7 +84,7 @@ function App() {
       initContracts();
     }
     else setLoading(false);
-  })
+  }, []);
 
   return (
     <>
