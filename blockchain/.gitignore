@@ -2,3 +2,4 @@ node_modules
 .mnemonic
 build
 coverage
+package-lock.json
